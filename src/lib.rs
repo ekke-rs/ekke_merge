@@ -1,7 +1,27 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+mod merge;
+mod error;
+mod std_impl;
+
+pub use merge::
+{
+	Merge ,
+};
+
+
+pub use error::
+{
+	MergeResult ,
+};
+
+
+#[ cfg( feature = "serdeyaml" ) ]
+//
+pub use error::
+{
+	MergeError  ,
+};
+
+
+#[ cfg( feature = "serdeyaml" ) ]
+//
+mod serde_yaml_impl;
