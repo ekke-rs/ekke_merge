@@ -43,6 +43,7 @@ simple_merge!( isize        );
 simple_merge!( f32          );
 simple_merge!( f64          );
 
+simple_merge!( &str         );
 simple_merge!( String       );
 
 
@@ -122,6 +123,23 @@ impl<T> Merge for Vec< T > where T: Merge
 
 
 
+
+// TODO: Make generic for all tuple lengths, and verify it works with repeating types, eg. (T,T)
+//
+impl<T, U> Merge for (T, U) where T: Merge, U: Merge
+{
+	fn merge( &mut self, other: Self ) -> MergeResult<()>
+	{
+		self.0.merge( other.0 )?;
+		self.1.merge( other.1 )?;
+
+		Ok(())
+	}
+}
+
+
+
+
 #[ cfg( test ) ]
 //
 mod tests
@@ -135,7 +153,6 @@ mod tests
 	{
 		a.merge( b ).unwrap();
 		assert_eq!( a, expect );
-
 	}
 
 
@@ -157,6 +174,15 @@ mod tests
 	#[ test ] fn merge_bool2() { cmp( false,  true, true  ) }
 
 	#[ test ] fn merge_char()  { cmp( 'a', 'b', 'b' ) }
+
+	#[ test ] fn merge_str()
+	{
+		let a = "hi";
+		let b = "ciao";
+
+		cmp( a, b, "ciao" );
+	}
+
 
 	// Collections
 	//
@@ -246,5 +272,28 @@ mod tests
 		c.insert( "a", o );
 
 		cmp( a, b, c )
+	}
+
+
+
+	#[ test ] fn merge_tuple()
+	{
+		let a_s = "hi";
+		let b_s = "ciao";
+		let c_s = "ciao";
+
+		let mut a = HashMap::new();
+		let mut b = HashMap::new();
+		let mut c = HashMap::new();
+
+		a.insert( "a", 5 );
+		a.insert( "b", 7 );
+
+		b.insert( "b", 1 );
+
+		c.insert( "a", 5 );
+		c.insert( "b", 1 );
+
+		cmp( (a_s, a), (b_s, b), (c_s, c) )
 	}
 }

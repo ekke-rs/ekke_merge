@@ -11,3 +11,4 @@ Impls for serde_yaml are provided behind a feature ("serdeyaml"). This allows de
 - change should_panic tests to verify the error type
 - add other collections from std
 - add impls for other formats than yaml
+- add a macro to generate for tuples of longer arity
