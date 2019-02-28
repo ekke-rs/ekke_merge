@@ -2,23 +2,18 @@
 
 	name    = "ekke_merge"
 	version = "0.1.0"
-	authors = ["Naja Melan <najamelan@autistici.org>"]
+	authors = [ "Naja Melan <najamelan@autistici.org>" ]
 	edition = "2018"
 
 
 [features]
 
-	"serdeyaml" = [ "serde_yaml" ]
+	"serdeyaml" = [ "serde_yaml"        ]
+	"derive"    = [ "ekke_merge_derive" ]
 
 
 [dependencies]
 
-	failure    = "0.1.5"
-	serde_yaml = { version = "^0.8.8", optional = true }
-
-
-[dev-dependencies]
-
-	# For the derive example
-	#
-	ekke_merge_derive = { path = "../ekke_merge_derive" }
+	failure           = "0.1.5"
+	serde_yaml        = { version = "^0.8.8"           , optional = true }
+	ekke_merge_derive = { path = "../ekke_merge_derive", optional = true }

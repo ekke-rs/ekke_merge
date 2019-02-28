@@ -25,3 +25,12 @@ pub use error::
 #[ cfg( feature = "serdeyaml" ) ]
 //
 mod serde_yaml_impl;
+
+
+
+#[ cfg( feature = "derive" ) ]
+//
+pub use ekke_merge_derive::
+{
+	Merge  ,
+};
